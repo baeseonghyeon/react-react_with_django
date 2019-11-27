@@ -1,0 +1,9 @@
+$bg-color: lightgray;
+$font-color: black;
+
+.App {
+	background-color: $bg-color;
+	h1 {
+		color: $font-color;
+	}
+}
