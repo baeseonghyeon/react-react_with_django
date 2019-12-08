@@ -308,105 +308,75 @@ class WorldClock extends React.Component {
 export default WorldClock;
 ```
 
-## 11. Lifecycle
+## Lifecycle
 
 - LifeCycle(생명주기)
 
   - https://react-anyone.vlpt.us/05.html
 
-  - 컴포넌트가
-    - 나타날 때(Mounting)
-    - 업데이트 될 때(Updating)
-    - 사라질 때(Unmounting)
+1. 검포넌트가 나타날 때(Mounting)
+2. 검포넌트가 업데이트 될 때(Updating)
+3. 검포넌트가 사라질 때(Unmounting)
 
-  1. Mounting(나타날 때)
-     - Constructor : 생성자 함수, 만든 컴포넌트가 처음 브라우저에 나타나는 과정에서 먼저 생성되는 함수 (state등의 초기 설정 진행)
+1. Mounting(나타날 때)
+   - Constructor : 생성자 함수, 만든 컴포넌트가 처음 브라우저에 나타나는 과정에서 먼저 생성되는 함수 (state등의 초기 설정 진행)
+   - State 구조 설정, 컴포넌트가 Mount 하기 전에 할 설정, setStateX
+   - getDerivedStateFromProps : Props로 받은 값을 State로 동기화 시 사용, 마운팅, 업데이트 과정에서 실행됨
+   - render : 어떤 돔을 만들지, 내부 태그에 어떤 값을 전달 할지 결정,
+   - **componentDidMount** : 컴포넌트가 브라우저에 나타난 시점에, 외부 라이브러리 및 네트워크 api 요청. 이벤트 요청을 주로 처리함
+     - 필요한 데이터 요청
+     - 각종 비동기 요청(Subscription)
 
-     - getDerivedStateFromProps : Props로 받은 값을 State로 동기화 시 사용, 마운팅, 업데이트 과정에서 실행됨
+2. Updating(업데이트 될 때)
+   - shouldComponentUpdate : 컴포넌트가 업데이트 되는 성능 최적화, 컴포넌트는 기본적으로 부모컴포넌트의 자식 컴포넌트까지 랜더되도록 되어 있지만, 로직에 따라 false를 시켜 가상돔에 랜더링을 조작해 성능최적화를 시켜 줌(업데이트를 막아줌)
+   - getSnapshotBeforeUpdate : 랜더링 직후 브라우저 상에 반영 직전 호출되는 함수, 스크롤의 위치 혹은 돔의 크기를 가져옴
+   - **componentDidUpdate** : 컴포넌트가 업데이트 되었을때 호출되는 함수 / 스테이트 변경 시 / 페이지 변경 시
+     - 업데이트 이후 수정할 때
+     - If() { setState() } #setState 자체가 업데이트이기 때문에 루프에 빠질 수 있음, 분기를 달아주세요.
 
-  - render : 어떤 돔을 만들지, 내부 태그에 어떤 값을 전달 할지 결정,
+3. Unmounting(사라질 때)
+   - **componentWillUnmount** : 앞 서 설정한 리스너를 제거해주는 과정
+     - 데이터 요청, 비동기 함수, 타이머 종료
+     - setState X
 
-    - componentDidMount : 컴포넌트가 브라우저에 나타난 시점에, 외부 라이브러리 및 네트워크 api 요청. 이벤트 요청을 주로 처리함
+4. 컴포넌트 업데이트 최적화
+   - PureComponent
+     - 자식 컴포넌트 + 부모의 Updata 최적화
+     - 자동화
 
-  2. Updating(업데이트 될 때)
+     ```react
+     class Exam extends React.PureComponent {
+       
+     }
+     ```
+   - ShouldComponentUpdate
+     - 커스터마이징, 업데이트 여부 관리
+     
+     
+## React Hook
 
-     - shouldComponentUpdate : 컴포넌트가 업데이트 되는 성능 최적화, 컴포넌트는 기본적으로 부모컴포넌트의 자식 컴포넌트까지 랜더되도록 되어 있지만, 로직에 따라 false를 시켜 가상돔에 랜더링을 조작해 성능최적화를 시켜 줌(업데이트를 막아줌)
+- Hook을 통해서 함수영 컴포넌트에서도 state를 사용할 수 있다.
+  - https://ko.reactjs.org/docs/hooks-state.html
+- useState
 
-     - getSnapshotBeforeUpdate : 랜더링 직후 브라우저 상에 반영 직전 호출되는 함수, 스크롤의 위치 혹은 돔의 크기를 가져옴
-
-     - componentDidUpdate : 컴포넌트가 업데이트 되었을때 호출되는 함수 / 스테이트 변경 시 / 페이지 변경 시
-
-  3. Unmounting(사라질 때)
-
-     - componentWillUnmount : 앞 서 설정한 리스너를 제거해주는 과정
+```react
+// 리액트 컴포넌트 구성에 필요한 요소들을 불러옵니다. useState 임포트
+import React , { useState } from 'react';
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+fuction Example() {
+  
+// todo 라는 새로운 초기값 설정(useState) 상태값 정의와 함수생성(setTodo) 
+// const [상태명, set상태명] = useState(초기값);
+// set상태명 을 setState처럼 사용할 수 있다.
 
-## Available Scripts
+const [todo, setTodo] = useState('');
+}
+```
+- Redux
+  - 대규모 상태관리에 효과적 
+     
+     
 
-In the project directory, you can run:
 
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
