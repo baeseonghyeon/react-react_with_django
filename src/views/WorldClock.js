@@ -29,16 +29,27 @@ class WorldClock extends React.Component {
 			minute: 0,
 			stop: false,
 			content: '',
+			show: true,
 		}
+		console.log("  Child) 시작합니다.")
+	}
 
+	componentDidMount() {
+		// this.setState
+		// 절대 안됨! this.state.minute += 1;
 		this.timer = setInterval(() => {
 			this.setState((state)=>(
 				state.minute === 59
 				?{hour: state.hour+1, minute: 0}
 				:{minute: state.minute+1}
 			))
-		}, 100);
+		},5000);
 
+		console.log("  Child) 마운트되었습니다.")
+	}
+
+	componentDidUpdate() {
+		console.log("  Child) 업데이트!")
 	}
 
 	handlingClick = (evt) => {

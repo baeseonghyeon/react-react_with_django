@@ -4,7 +4,6 @@ import WorldClock from './views/WorldClock';
 import './App.css';
 import './assets/custom.scss';
 
-
 function App() {
 
 	const cityTimeData = [
@@ -34,7 +33,7 @@ function App() {
 	))
 
 	return (
-		<div className="App">
+		<div className="App">git commit -m "first commit"
 			<h1>WorldTime V1</h1>
 			{WorldClockList}
 			<hr/>
