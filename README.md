@@ -1,7 +1,7 @@
 # React with Django
 
 
-## 개요
+## React 개요
 
 - React를 왜 쓰는가?
 
